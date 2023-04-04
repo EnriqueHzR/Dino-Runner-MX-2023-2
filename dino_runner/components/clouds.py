@@ -4,13 +4,11 @@ import random
 from dino_runner.utils.constants import CLOUD, SCREEN_HEIGHT, SCREEN_WIDTH
 
 class Clouds:
-    #Hacer las contantes Y y X que se pondra los limites de donde pueden aparecer las nubes.
     Y_POS = [0,310]
-    X_POS = [SCREEN_WIDTH]
-    VEL = 5
+    X_POS = SCREEN_WIDTH
     def __init__(self):
         self.img = CLOUD
-        self.x_pos = self.X_POS[0]
+        self.x_pos = self.X_POS
         self.set_Y_POS()
         self.img_react = self.img.get_rect()
         self.img_react.x = self.x_pos
