@@ -1,5 +1,5 @@
 import pygame
-from dino_runner.utils.constants import RUNNING, JUMPING, DUCKING
+from dino_runner.utils.constants import RUNNING, JUMPING, DUCKING, DEAD
 
 # Un dinosaurio puede correr.
 class Dinosaur:
@@ -18,6 +18,7 @@ class Dinosaur:
         self.dino_duck = False
         self.dino_jump = False
         self.jump_vel = self.JUMP_VEL
+        self.dead = False
 
     def update(self, user_input):
         if self.dino_jump:
@@ -68,3 +69,11 @@ class Dinosaur:
             self.dino_rect.y = self.Y_POS
             self.dino_jump = False
             self.jump_vel = self.JUMP_VEL
+    
+    def die(self):
+        y, x = self.dino_rect.y, self.dino_rect.x
+        self.image = DEAD
+        self.dino_rect = self.image.get_rect()
+        self.dino_rect.x = x
+        self.dino_rect.y = y
+        
