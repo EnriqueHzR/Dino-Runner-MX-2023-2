@@ -12,7 +12,7 @@ class Bird(Obstacles):
         self.rect.y = random.choice(self.Y_POS_BIRD)
         self.step_index = 0
     
-    def events(self):
+    def fly(self):
         self.image = BIRD[0] if self.step_index < 5 else BIRD[1]
         x_pos = self.rect.x
         y_pos = self.rect.y

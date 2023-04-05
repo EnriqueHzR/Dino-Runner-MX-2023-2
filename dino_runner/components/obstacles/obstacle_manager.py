@@ -1,6 +1,7 @@
 from dino_runner.components.obstacles.cactus import Cactus, LargeCactus
 from dino_runner.components.obstacles.bird import Bird
 import random
+
 class ObstacleManager:
     def __init__(self):
         self.obstacles = []
@@ -20,7 +21,7 @@ class ObstacleManager:
             if obstacle.rect.x < -obstacle.rect.width:
                 self.obstacles.remove(obstacle)
             if obstacle.NAME == "bird":
-                obstacle.events()
+                obstacle.fly()
             obstacle.update(game_speed, player)
 
     def draw(self, screen):

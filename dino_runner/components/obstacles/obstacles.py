@@ -8,7 +8,7 @@ class Obstacles:
 
     def update(self, game_speed, player):
         self.rect.x -= game_speed
-        if self.rect.colliderect(player.dino_rect):
+        if self.rect.colliderect(player.dino_rect) and not player.shield:
             player.die()
             pygame.time.delay(300)
             player.dead = True
