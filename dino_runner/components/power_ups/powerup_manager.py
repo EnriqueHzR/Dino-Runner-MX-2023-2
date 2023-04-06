@@ -1,4 +1,6 @@
 from .shield import Shield
+from .hammer import Hammer
+import random
 class PowerUpManager:
     POINTS = 200
 
@@ -7,7 +9,7 @@ class PowerUpManager:
 
     def update(self,game_speed,points, player):
         if len(self.powerups) == 0 and points % self.POINTS == 0:
-            self.powerups.append(Shield())
+            self.powerups.append(random.choice([Shield(), Hammer()]))
         for powerup in self.powerups:
             if powerup.used or powerup.rect.x < -powerup.rect.width:
                 self.powerups.pop()

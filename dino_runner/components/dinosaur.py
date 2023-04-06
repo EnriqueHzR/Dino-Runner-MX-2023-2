@@ -1,7 +1,8 @@
 import pygame
 from dino_runner.utils.constants import (RUNNING, JUMPING, DUCKING, DEAD, RUNNING_SHIELD,
                                         DUCKING_SHIELD, JUMPING_SHIELD, DEFAULT_TYPE,
-                                        SHIELD_TYPE)
+                                        SHIELD_TYPE, HAMMER_TYPE, RUNNING_HAMMER, DUCKING_HAMMER,
+                                        JUMPING_HAMMER)
 
 # Un dinosaurio puede correr.
 class Dinosaur:
@@ -10,9 +11,9 @@ class Dinosaur:
     JUMP_VEL = 8.5
 
     def __init__(self):
-        self.run_img = {DEFAULT_TYPE: RUNNING, SHIELD_TYPE: RUNNING_SHIELD}
-        self.jump_img = {DEFAULT_TYPE: JUMPING, SHIELD_TYPE: JUMPING_SHIELD}
-        self.duck_img = {DEFAULT_TYPE: DUCKING, SHIELD_TYPE: DUCKING_SHIELD}
+        self.run_img = {DEFAULT_TYPE: RUNNING, SHIELD_TYPE: RUNNING_SHIELD, HAMMER_TYPE: RUNNING_HAMMER}
+        self.jump_img = {DEFAULT_TYPE: JUMPING, SHIELD_TYPE: JUMPING_SHIELD, HAMMER_TYPE: JUMPING_HAMMER}
+        self.duck_img = {DEFAULT_TYPE: DUCKING, SHIELD_TYPE: DUCKING_SHIELD, HAMMER_TYPE: DUCKING_HAMMER}
         self.type = DEFAULT_TYPE
         self.image = self.run_img[self.type][0]
         # Creando un rectángulo con el mismo tamaño que la imagen.
@@ -84,6 +85,10 @@ class Dinosaur:
         if power_up.type == SHIELD_TYPE:
             self.type = SHIELD_TYPE
             self.shield = True
+            self.time_up_powerup = power_up.time_up
+        elif power_up.type == HAMMER_TYPE:
+            self.type = HAMMER_TYPE
+            self.shield = False
             self.time_up_powerup = power_up.time_up
 
     def reset(self):
