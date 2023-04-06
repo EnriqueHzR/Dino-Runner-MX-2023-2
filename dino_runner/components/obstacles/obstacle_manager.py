@@ -1,5 +1,6 @@
 from dino_runner.components.obstacles.cactus import Cactus, LargeCactus
 from dino_runner.components.obstacles.bird import Bird
+from .asteroid import Asteroid
 import random
 
 class ObstacleManager:
@@ -10,13 +11,15 @@ class ObstacleManager:
 
     def update(self, game_speed, player):
         if len(self.obstacles) == 0:
-            chance = random.randint(0, 2)
+            chance = random.randint(0, 3)
             if chance == 0:
                 self.obstacles.append(Cactus())
             elif chance == 1:
                 self.obstacles.append(LargeCactus())
-            else:
+            elif chance == 2:
                 self.obstacles.append(Bird())
+            elif chance == 3:
+                self.obstacles.append(Asteroid())
         for obstacle in self.obstacles:
             if obstacle.rect.x < -obstacle.rect.width:
                 self.obstacles.remove(obstacle)

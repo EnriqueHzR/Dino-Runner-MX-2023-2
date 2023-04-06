@@ -61,10 +61,11 @@ BIRD = [
     pygame.image.load(os.path.join(IMG_DIR, "Bird/Bird2.png")),
 ]
 
+ASTEROID = pygame.image.load(os.path.join(IMG_DIR, 'Other/asteroide.png'))
 CLOUD = pygame.image.load(os.path.join(IMG_DIR, 'Other/Cloud.png'))
 SHIELD = pygame.image.load(os.path.join(IMG_DIR, 'Other/shield.png'))
 HAMMER = pygame.image.load(os.path.join(IMG_DIR, 'Other/hammer.png'))
-
+SPRINT = pygame.image.load(os.path.join(IMG_DIR, 'Other/sprint.png'))
 
 BG = pygame.image.load(os.path.join(IMG_DIR, 'Other/Track.png'))
 
@@ -74,3 +75,4 @@ DEAD = pygame.image.load(os.path.join(IMG_DIR, 'Dino/DinoDead.png'))
 DEFAULT_TYPE = "default"
 SHIELD_TYPE = "shield"
 HAMMER_TYPE = "hammer"
+SPRINT_TYPE = "sprint"

@@ -32,7 +32,6 @@ class Game:
             self.events()
             self.update()
             self.draw()
-        pygame.time.delay(5000)
         pygame.quit()
 
     def events(self):
@@ -70,6 +69,8 @@ class Game:
             for cloud in self.clouds:
                 cloud.draw(self.screen)
             self.player.draw(self.screen)
+            if self.player.powerup != None:
+                self.player.powerup.draw(self.screen)
             self.obstacles_manager.draw(self.screen)
             self.powerup_manager.draw(self.screen)
             self.draw_score()
@@ -101,8 +102,10 @@ class Game:
         else:
             text, text_rect = text_utils.get_message('Press any key to restart', 30)
             score, score_rect = text_utils.get_message('Score: ' + str(self.points), 30, height= SCREEN_HEIGHT//2 + 50)
+            intents, intents_rect = text_utils.get_message('Intents: ' + str(self.death_count), 30, height= SCREEN_HEIGHT//2 + 100)
             self.screen.blit(text, text_rect)
             self.screen.blit(score, score_rect)
+            self.screen.blit(intents, intents_rect)
 
     def reset(self):
         self.game_speed = 20

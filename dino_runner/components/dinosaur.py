@@ -2,7 +2,9 @@ import pygame
 from dino_runner.utils.constants import (RUNNING, JUMPING, DUCKING, DEAD, RUNNING_SHIELD,
                                         DUCKING_SHIELD, JUMPING_SHIELD, DEFAULT_TYPE,
                                         SHIELD_TYPE, HAMMER_TYPE, RUNNING_HAMMER, DUCKING_HAMMER,
-                                        JUMPING_HAMMER)
+                                        JUMPING_HAMMER, SCREEN_WIDTH, SPRINT_TYPE,HEART)
+from .power_ups.hammer import HammerProjectile
+from dino_runner.components import text_utils
 
 # Un dinosaurio puede correr.
 class Dinosaur:
@@ -28,6 +30,9 @@ class Dinosaur:
         self.dead = False
         self.shield = False
         self.time_up_powerup = 0
+        self.powerup = None
+        self.boosts = []
+        self.hearts = 1
 
     def update(self, user_input):
         if self.dino_jump:
@@ -50,12 +55,34 @@ class Dinosaur:
             self.dino_jump = False
         if self.step_index >= 10:
             self.step_index = 0 
-        if self.shield:
+        if self.type != DEFAULT_TYPE:
             time_to_show = round((self.time_up_powerup - pygame.time.get_ticks()) / 1000, 2)
             if time_to_show < 0:
                 self.reset()
+        if self.type == HAMMER_TYPE:
+            if user_input[pygame.K_SPACE]:
+                self.powerup = HammerProjectile(self.dino_rect.x + 50, self.dino_rect.y + 10)
+                self.type = DEFAULT_TYPE
+        if SPRINT_TYPE in self.boosts:
+            if user_input[pygame.K_r]:
+                self.sprinting = True
+                self.boosts.remove(SPRINT_TYPE)
+                #Dar escudo por 7 segundos.
+                self.time_up_powerup = pygame.time.get_ticks() + 7000
+                self.type = SHIELD_TYPE
+                self.shield = True
+        if self.powerup != None:
+            self.powerup.update(10)
+            if self.powerup.rect.x > SCREEN_WIDTH:
+                self.powerup = None
+
     def draw(self, screen):
         screen.blit(self.image, self.dino_rect)#Dibujar el rectángulo en la pantalla.
+        if self.type != DEFAULT_TYPE:
+            text, text_rect = text_utils.get_message("Power Up: " + str((self.time_up_powerup - pygame.time.get_ticks())/1000) + "s.", 30, height=50, width=200)
+            screen.blit(text, text_rect)
+        for heart in range(self.hearts):
+            screen.blit(HEART, (10 + heart * 40, 10))
 
     def run(self):
         self.image = self.run_img[self.type][self.step_index // 5]
@@ -95,6 +122,7 @@ class Dinosaur:
         self.type = DEFAULT_TYPE
         self.shield = False
         self.time_up_powerup = 0
+        self.powerup = None
 
     def die(self):
         y, x = self.dino_rect.y, self.dino_rect.x
