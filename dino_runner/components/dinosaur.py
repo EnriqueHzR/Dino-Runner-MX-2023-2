@@ -33,6 +33,7 @@ class Dinosaur:
         self.powerup = None
         self.boosts = []
         self.hearts = 1
+        self.down_fast = False
 
     def update(self, user_input):
         if self.dino_jump:
@@ -45,6 +46,9 @@ class Dinosaur:
             self.dino_duck = True
             self.dino_run = False
             self.dino_jump = False
+        elif user_input[pygame.K_DOWN] and self.dino_jump:
+            self.down_fast = True
+            self.jump_vel = -9.1
         elif user_input[pygame.K_UP] and not self.dino_jump:
             self.dino_jump = True
             self.dino_run = False
@@ -67,10 +71,6 @@ class Dinosaur:
             if user_input[pygame.K_r]:
                 self.sprinting = True
                 self.boosts.remove(SPRINT_TYPE)
-                #Dar escudo por 7 segundos.
-                self.time_up_powerup = pygame.time.get_ticks() + 7000
-                self.type = SHIELD_TYPE
-                self.shield = True
         if self.powerup != None:
             self.powerup.update(10)
             if self.powerup.rect.x > SCREEN_WIDTH:
@@ -79,7 +79,7 @@ class Dinosaur:
     def draw(self, screen):
         screen.blit(self.image, self.dino_rect)#Dibujar el rectángulo en la pantalla.
         if self.type != DEFAULT_TYPE:
-            text, text_rect = text_utils.get_message("Power Up: " + str((self.time_up_powerup - pygame.time.get_ticks())/1000) + "s.", 30, height=50, width=200)
+            text, text_rect = text_utils.get_message("Power Up: " + str((self.time_up_powerup - pygame.time.get_ticks())/1000) + "s.", 20, 100, 50)
             screen.blit(text, text_rect)
         for heart in range(self.hearts):
             screen.blit(HEART, (10 + heart * 40, 10))

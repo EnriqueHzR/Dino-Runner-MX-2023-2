@@ -24,7 +24,7 @@ class Obstacles:
             if self.rect.colliderect(player.powerup.rect) and self.active == True:
                 self.active = False
                 player.powerup = None
-                self.rect.x = SCREEN_WIDTH
+                self.rect.x = -SCREEN_WIDTH
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
